@@ -8,7 +8,8 @@ import '../../Logic/reutrnOrderController.dart';
 final controllerApi = Get.put(ReutrnOrderController());
 
 class ReutrnOrderScreen extends StatelessWidget {
-  const ReutrnOrderScreen({super.key});
+  ReutrnOrderScreen({super.key});
+
   DataTable dataBody() {
     return DataTable(
       border: TableBorder.all(),
@@ -17,7 +18,8 @@ class ReutrnOrderScreen extends StatelessWidget {
       columns: const [
         DataColumn(
           label: Text(
-            'سبب الإسترجاع',
+            'سبب \nالاسترجاع',
+            textAlign: TextAlign.center,
             style: TextStyle(
                 color: Color.fromRGBO(255, 255, 255, 1),
                 fontWeight: FontWeight.w700,
@@ -26,7 +28,8 @@ class ReutrnOrderScreen extends StatelessWidget {
         ),
         DataColumn(
           label: Text(
-            'هل تم التواصل ؟',
+            'هل تم\n التواصل ؟',
+            textAlign: TextAlign.center,
             style: TextStyle(
                 color: Color.fromRGBO(255, 255, 255, 1),
                 fontWeight: FontWeight.w700,
@@ -35,7 +38,8 @@ class ReutrnOrderScreen extends StatelessWidget {
         ),
         DataColumn(
           label: Text(
-            'تاريخ تسليم السيارة',
+            'تاريخ تسليم ',
+            textAlign: TextAlign.center,
             style: TextStyle(
                 color: Color.fromRGBO(255, 255, 255, 1),
                 fontWeight: FontWeight.w700,
@@ -45,7 +49,8 @@ class ReutrnOrderScreen extends StatelessWidget {
         DataColumn(
           label: Text(
             // textAlign: TextAlign.center,
-            'تاريخ استلام السيارة',
+            'تاريخ استلام \nالسيارة',
+            textAlign: TextAlign.center,
             style: TextStyle(
                 color: Color.fromRGBO(255, 255, 255, 1),
                 fontWeight: FontWeight.w700,
@@ -74,12 +79,32 @@ class ReutrnOrderScreen extends StatelessWidget {
       rows: controllerApi.data
           .map((e) => DataRow(
                 cells: [
-                  DataCell(Text(e['description'])),
-                  DataCell(Text(e['done'].toString())),
-                  DataCell(Text(e['dateL'])),
-                  DataCell(Text(e['dateF'])),
-                  DataCell(Text(e['name'])),
-                  DataCell(Text(e['id'])),
+                  DataCell(Text(
+                    e['description'],
+                    style: TextStyle(
+                        fontSize: 18, color: Color.fromRGBO(75, 75, 75, 1)),
+                  )),
+                  DataCell(DropDown()),
+                  DataCell(Text(
+                    e['dateL'],
+                    style: TextStyle(
+                        fontSize: 18, color: Color.fromRGBO(75, 75, 75, 1)),
+                  )),
+                  DataCell(Text(
+                    e['dateF'],
+                    style: TextStyle(
+                        fontSize: 18, color: Color.fromRGBO(75, 75, 75, 1)),
+                  )),
+                  DataCell(Text(
+                    e['name'],
+                    style: TextStyle(
+                        fontSize: 18, color: Color.fromRGBO(75, 75, 75, 1)),
+                  )),
+                  DataCell(Text(
+                    e['id'],
+                    style: TextStyle(
+                        fontSize: 18, color: Color.fromRGBO(75, 75, 75, 1)),
+                  )),
 
                   // DataCell(Text(controllerApi.data[e]['name'])),
                   // DataCell(Text(controllerApi.data[e]['dateF'])),
@@ -102,11 +127,57 @@ class ReutrnOrderScreen extends StatelessWidget {
             return Text("data");
           } else {
             return Column(
-              children: [dataBody()],
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 700),
+                  child: Text(
+                    '(${controllerApi.data.length}) عدد الطلبات',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                dataBody()
+              ],
             );
           }
         },
       ),
+    );
+  }
+}
+
+class DropDown extends StatefulWidget {
+  const DropDown({super.key});
+
+  @override
+  State<DropDown> createState() => _DropDownState();
+}
+
+String dropdownvalue = 'لا';
+
+// List of items in our dropdown menu
+var items = [
+  'نعم',
+  'لا',
+].obs;
+
+class _DropDownState extends State<DropDown> {
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton(
+      value: dropdownvalue,
+      items: items.map((items) {
+        return DropdownMenuItem(
+          value: items,
+          child: Text('${items}'),
+        );
+      }).toList(),
+      onChanged: (value) {
+        setState(() {});
+        dropdownvalue = value!;
+      },
     );
   }
 }
