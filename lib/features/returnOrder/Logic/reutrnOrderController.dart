@@ -5,6 +5,11 @@ import 'package:http/http.dart' as http;
 
 class ReutrnOrderController extends GetxController {
   List data = [].obs;
+  // RxInt totalData = 100.obs;
+
+  // RxInt DataPerPage = 5.obs;
+
+  // RxInt currentPage = 0.obs;
 
   Future<void> getUserApi() async {
     final response = await http.get(Uri.parse(
@@ -18,4 +23,23 @@ class ReutrnOrderController extends GetxController {
     }
     // update();
   }
+
+  // num pageCount() {
+  //   return totalData / DataPerPage;
+  // }
+  // // num pageCount() {
+  // //   return totalData / DataPerPage;
+  // // }
+
+  // previousPage() {
+  //   if (currentPage != 0) {
+  //     currentPage -= 1;
+  //   }
+  // }
+
+  // nextPage() {
+  //   if ((currentPage + 1) < pageCount()) {
+  //     currentPage += 1;
+  //   }
+  // }
 }
